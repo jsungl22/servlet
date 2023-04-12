@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 public class MyView {
 
@@ -18,5 +19,19 @@ public class MyView {
             response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
+    }
+
+    public void render(Map<String, Object> model, HttpServletRequest request,
+                       HttpServletResponse response) throws ServletException, IOException {
+        modelToRequestAttribute(model, request);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
+        dispatcher.forward(request, response);
+    }
+
+    // model에 담긴 데이터를 request.setAttribute로 HttpServletRequest 객체에 담는다
+    // 그래야 JSP에서 꺼내쓸수있다(뷰 템플릿마다 다름)
+    private void modelToRequestAttribute(Map<String, Object> model,
+                                         HttpServletRequest request) {
+        model.forEach((key, value) -> request.setAttribute(key, value));
     }
 }
