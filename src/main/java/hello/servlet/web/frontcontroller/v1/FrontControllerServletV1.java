@@ -29,7 +29,7 @@ public class FrontControllerServletV1 extends HttpServlet {
         System.out.println("FrontControllerServletV1.service");
         String requestURI = request.getRequestURI(); //요청 URL
 
-        ControllerV1 controller = controllerMap.get(requestURI);
+        ControllerV1 controller = controllerMap.get(requestURI); // 각 컨트롤러는 부모가 ControllerV1이므로 받을 수 있다
         if (controller == null) {
             // 잘못된 주소 요청이면 404
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
